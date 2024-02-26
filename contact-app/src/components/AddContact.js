@@ -1,22 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function AddContact() {
+export default function AddContact(props) {
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleNameChange = (event) =>{
+    setName(event.target.value)
+  }
+
+  const handleEmailChange = (event) =>{
+    setEmail(event.target.value)
+  }
+
+  const handleAddContact = (event) =>{
+   
+    if(name === "" || email === ""){
+      alert("All field are mandatory")
+    }
+  
+    const newContact = { 
+      id : name.length + 1,
+      name:name,
+      email:email };
+
+    props.addContact(newContact);
+    setName("")
+    setEmail("")
+    event.preventDefault();
+  }
   return (
     <div className='ui main'>
       <h2>Add Contact</h2>
-      <form className='ui form'>
+      <form 
+      className='ui form'
+      onSubmit={handleAddContact}>
 
         <div className='field'>
             <label>Name</label>
-            <input type='text' name='name' placeholder='Name' />
+            <input 
+            onChange={handleNameChange}
+            value={name}
+            type='text' 
+            name='name' 
+            placeholder='Name'
+             />
         </div>
 
         <div className='field'>
             <label>Email</label>
-            <input type='text' name='email' placeholder='Email' />
+            <input 
+            onChange={handleEmailChange}
+            value={email}
+            type='text' 
+            name='email' 
+            placeholder='Email' />
         </div>
         
-        <button className='ui button blue'>Add</button>
+        <button
+         className='ui button blue'
+         type="submit">Add</button>
       </form>
     </div>
   )
