@@ -20,7 +20,7 @@ export default function AddContact(props) {
     }
   
     const newContact = { 
-      id : name.length + 1,
+      id : props.contacts.length +1,
       name:name,
       email:email };
 

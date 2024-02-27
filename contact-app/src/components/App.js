@@ -15,11 +15,18 @@ function App() {
   setContacts([...contacts, newContact]);
 };
  
+const deleteContact = (id) =>{
+  setContacts((prevContacts) =>{
+    return prevContacts.filter((contact,index) =>{
+      return index !== id
+    })
+  })
+}
   return (
     <div className='ui container'>
       <Header />
-      <AddContact addContact={addNewContact} />
-      <ContactList contacts = {contacts} setContacts={setContacts} />
+      <AddContact addContact={addNewContact} contacts={contacts} />
+      <ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact} />
     </div>
   );
 }
