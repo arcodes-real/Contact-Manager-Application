@@ -14,7 +14,13 @@ export default function ContactCard(props) {
                 <i 
                 onClick={()=>{props.onClicked(props.id)}}
                 className='trash alternate outine icon'
-                style={{ color : "red", marginTop : "7px" }}></i>
+                style={{ color : "red", marginTop : "7px", cursor:"pointer" }}
+                onMouseEnter={(e) =>{
+                  e.target.style.color ="plum"
+                }}
+                onMouseLeave={(e) =>{
+                  e.target.style.color ="red"
+                }}></i>
             </div>
   )
 }
