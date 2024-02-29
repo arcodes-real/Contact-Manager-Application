@@ -17,6 +17,7 @@ export default function AddContact(props) {
    
     if(name === "" || email === ""){
       alert("All field are mandatory")
+      return // exit the function if the 'if block' runs, else a contact card will get created with no name and email
     }
   
     const newContact = { 
