@@ -12,3 +12,6 @@ root.render(
 );
 
 
+// takeways
+// 1) Programmatic navigation -> useHistory, useNavigate
+

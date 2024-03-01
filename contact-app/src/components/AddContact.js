@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+
 
 export default function AddContact(props) {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
 
   const handleNameChange = (event) =>{
     setName(event.target.value)
@@ -28,10 +31,13 @@ export default function AddContact(props) {
     props.addContact(newContact);
     setName("")
     setEmail("")
+    alert("Contact added to contact list successfully")
+    
     event.preventDefault();
   }
   return (
     <div className='ui main'>
+    <br />
       <h2>Add Contact</h2>
       <form 
       className='ui form'
@@ -62,6 +68,10 @@ export default function AddContact(props) {
          className='ui button blue'
          type="submit">Add</button>
       </form>
+      <br />
+      <Link to="/contactlist">
+        <button className='ui button blue'>Show Contact List</button>
+      </Link>
     </div>
   )
 }

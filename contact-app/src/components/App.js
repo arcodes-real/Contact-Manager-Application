@@ -5,6 +5,9 @@ import './App.css';
 import Header from "./Header";
 import AddContact from "./AddContact"
 import ContactList from "./ContactList"
+import ContactDetails from './ContactDetails';
+
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 function App() {
 
@@ -47,9 +50,20 @@ useEffect(() => {
 
   return (
     <div className='ui container'>
+    
+    <Router>
       <Header />
-      <AddContact addContact={addNewContact} contacts={contacts} />
-      <ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact} />
+      <Routes>
+        <Route path='/' element={<ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact} />} />
+        <Route path='/addcontact' element={<AddContact addContact={addNewContact} contacts={contacts}/>} />
+        <Route path='/contactlist' element={<ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact}/>}/>
+        <Route path='/contact/:name' element={<ContactDetails />} />
+      </Routes>
+    </Router>
+    
+      
+      {/* <AddContact addContact={addNewContact} contacts={contacts} />
+      <ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact} /> */}
     </div>
   );
 }
