@@ -5,20 +5,43 @@ import './App.css';
 import Header from "./Header";
 import AddContact from "./AddContact"
 import ContactList from "./ContactList"
-import ContactDetails from './ContactDetails';
+// import ContactDetails from './ContactDetails';
+import api from "../api/contactsAPI"
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
+
 function App() {
 
- const LOCAL_STORAGE_KEY = "contacts";
- const [contacts, setContacts] = useState(
-  JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) ?? [])
- );
+//  const LOCAL_STORAGE_KEY = "contacts";
+ const [contacts, setContacts] = useState([]);
+//JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) ?? [])
+ 
 
- const addNewContact = (newContact) => {
-  console.log(newContact)
-  setContacts([...contacts, newContact]);
+ // API Call : retrieve contacts from api
+
+ const retrieveContacts = async() =>{
+  const response = await api.get("/contacts")
+  return response.data
+ }
+
+ // use retrievecontacts function
+
+ useEffect(() =>{
+  const getAllContacts = async()=>{
+    const allContacts = await retrieveContacts();
+    if(allContacts) setContacts(allContacts)
+  }
+getAllContacts();
+ }, [])
+
+ const addNewContact = async (newContact) => {
+  const request = {
+    id : contacts.length+1,
+    ...newContact
+  }
+  const response = await api.post("/contacts", request)
+  setContacts([...contacts, response.data]);
 };
  
 const deleteContact = (id) =>{
@@ -32,10 +55,10 @@ const deleteContact = (id) =>{
 // storing and retriving our contact data to and from localstorage using useEffect, so that our data is stored even after refreshing
 
 // storing the data to localstorage
-useEffect(() => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts))
-  console.log("Saved in local storage")
-}, [contacts])
+// useEffect(() => {
+//   // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts))
+//   // console.log("Saved in local storage")
+// }, [contacts])
 
 // // retriving the data from localstorage
 // useEffect(() => {
@@ -57,7 +80,7 @@ useEffect(() => {
         <Route path='/' element={<ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact} />} />
         <Route path='/addcontact' element={<AddContact addContact={addNewContact} contacts={contacts}/>} />
         <Route path='/contactlist' element={<ContactList contacts = {contacts} setContacts={setContacts} onChecked={deleteContact}/>}/>
-        <Route path='/contact/:name' element={<ContactDetails />} />
+        {/* <Route path='/contact/:name' element={<ContactDetails />} /> */}
       </Routes>
     </Router>
     
