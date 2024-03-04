@@ -6,7 +6,9 @@ import Header from "./Header";
 import AddContact from "./AddContact"
 import ContactList from "./ContactList"
 // import ContactDetails from './ContactDetails';
+import {v4 as uuid} from "uuid"
 import api from "../api/contactsAPI"
+import axios from "axios"
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
@@ -37,17 +39,18 @@ getAllContacts();
 
  const addNewContact = async (newContact) => {
   const request = {
-    id : contacts.length+1,
+    id : uuid(),
     ...newContact
   }
   const response = await api.post("/contacts", request)
   setContacts([...contacts, response.data]);
 };
  
-const deleteContact = (id) =>{
+const deleteContact = async(id) =>{
+  await api.delete(`/contacts/${id}`)
   setContacts((prevContacts) =>{
-    return prevContacts.filter((contact,index) =>{
-      return index !== id 
+    return prevContacts.filter((contact) =>{
+      return contact.id !== id 
     })
   })
 }

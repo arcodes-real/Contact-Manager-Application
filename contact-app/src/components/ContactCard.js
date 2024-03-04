@@ -4,7 +4,7 @@ import user from "../images/user.png"
 
 export default function ContactCard(props) {
 
-    const {name, email} = props.contact
+    const {id, name, email} = props.contact
 
   return (
     <div className='main'>
@@ -16,7 +16,7 @@ export default function ContactCard(props) {
                   {/* </Link> */}
                 </div>
                 <i 
-                onClick={()=>{props.onClicked(props.id)}}
+                onClick={()=>{props.onClicked(id)}}
                 className='trash alternate outine icon'
                 style={{ color : "red", marginTop : "7px", cursor:"pointer" }}
                 onMouseEnter={(e) =>{

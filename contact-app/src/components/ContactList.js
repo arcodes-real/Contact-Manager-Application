@@ -6,7 +6,7 @@ export default function ContactList(props) {
     
     const renderContactList = props.contacts.map((contact,index) => {
         return (
-            <ContactCard key={index} contact={contact} id={index} onClicked={props.onChecked} />
+            <ContactCard key={index} contact={contact}  onClicked={props.onChecked} />
         )
     })
   return (
